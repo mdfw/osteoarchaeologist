@@ -3,7 +3,7 @@
 
 Osteoarchaeologist is a set of files that will help you set up [Fossil-SCM](https://fossil-scm.org) on shared hosting like Dreamhost. It could also be used on a VPS or anywhere you want to personally host Fossils as a central resource. 
 
-What is Fossil? From the website: "Fossil is a simple, high-reliability, distributed software configuration management system with integrated Bug Tracking, Wiki, Forum, Technotes and a built-in web interface." But there's not a good centralized hosting for it (yet), like Github/lab or Bitbucket so I wanted a place to put all of my repos. I already had a Dreamhost account so I built these scripts to help me use Fossil on Dreamhost.
+What is Fossil? From the website: "Fossil is a simple, high-reliability, distributed software configuration management system with integrated Bug Tracking, Wiki, Forum, Technotes and a built-in web interface." But there's not a good centralized hosting for Fossils like Github/lab or Bitbucket (yet), so I wanted a place to put all of my repos. I already had a Dreamhost account so I built these scripts to help me use Fossil on Dreamhost.
 
 The interface is not pretty, but functional. It's mostly written in PHP, which some say ain't sexy, but it's pre-installed on Dreamhost and most shared hosts so it plays well with others.
 
@@ -46,7 +46,7 @@ The interface is not pretty, but functional. It's mostly written in PHP, which s
 8. Open your website. It should load correctly with a list of files. If it does not, check the apache error log.
 
 ### You want an open site
-As stated in the assumptions section above, this setup assumes one person (or a trusted few people) can create and destroy all of the fossils on this server. There's no user by user validation so it's imperative that the site be locked down with an apache password at least. If you don't want the ease and associated danger of creating and deleting fossils from the website, you can use the `list.php` file and not copy in `index.php`. Alternatively, there are `$allow_create` and `$allow_delte` configuration variables in config. If you use `list.php` or turn off `allow` functions but leave the site open, the world could see all of the fossils and potentially clone them (although you can prevent that in the individual fossil permissions).
+As stated in the assumptions section above, this setup assumes one person (or a trusted few people) can see, create and delete all of the fossils on this server. There's no user by user validation so it's imperative that the site be locked down with a server-level password at least. If you don't want the ease and associated danger of creating and deleting fossils from the website, you can use the `list.php` file. Alternatively, there are `$allow_create` and `$allow_delte` configuration variables in `o_config.php`. Note: if you use `list.php` or turn off `allow` functions but leave the site open, the world could see all of the fossils and potentially clone them (although you can prevent that in the individual fossil permissions).
 
 
 ## Contact information
