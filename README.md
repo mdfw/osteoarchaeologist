@@ -1,13 +1,16 @@
 # Osteoarchaeologist
 
 
-Osteoarchaeologist is a set of files that will help you set up Fossil-SCM on shared hosting like Dreamhost. It could also be used on a VPS or anywhere you want to personally host Fossils as a central resource. 
+Osteoarchaeologist is a set of files that will help you set up [Fossil-SCM](https://fossil-scm.org) on shared hosting like Dreamhost. It could also be used on a VPS or anywhere you want to personally host Fossils as a central resource. 
 
-The interface is not terribly pretty, but works. It's mostly written in PHP, which ain't sexy, but pre-installed on Dreamhost and most shared hosts.
+What is Fossil? From the website: "Fossil is a simple, high-reliability, distributed software configuration management system with integrated Bug Tracking, Wiki, Forum, Technotes and a built-in web interface." But there's not a good centralized hosting for it (yet), like Github/lab or Bitbucket so I wanted a place to put all of my repos. I already had a Dreamhost account so I built these scripts to help me use Fossil on Dreamhost.
+
+The interface is not pretty, but functional. It's mostly written in PHP, which some say ain't sexy, but it's pre-installed on Dreamhost and most shared hosts so it plays well with others.
 
 ## Assumptions
 * You have a site with Apache and PHP installed. Tested with Dreamhost's Ubuntu and PHP 7.x setup.
 * You want the site you put your fossils on to be locked down with basic authentication using Apache's authentication handler.  If you don't want to do this, look at `list.php` as an alternative. It doesn't have the ability to create and delete repositories, but it also doesn't allow bad actors to do bad things.
+* You can ssh into your hosting or otherwise install the fossil executable. 
 
 ## Includes:
 * An example htaccess file
@@ -43,7 +46,7 @@ The interface is not terribly pretty, but works. It's mostly written in PHP, whi
 8. Open your website. It should load correctly with a list of files. If it does not, check the apache error log.
 
 ### You want an open site
-As stated in the assumptions section above, this setup assumes one (or a trusted few) people can create and destroy all of the fossils on this server. There's no user by user validation so it's imperative that it be locked down with an apache password at least. If you don't want the ease and associated danger of creating and deleting fossils from the website, you can use the `list.php` file and not copy in `index.php`. You could rename `list.php` to `index.php` to allow it to act as the index. Advantages: Lower risk. Disadvantages: It's possible to list your fossils by anyone on the planet. It's not as easy to create/delete fossils.
+As stated in the assumptions section above, this setup assumes one person (or a trusted few people) can create and destroy all of the fossils on this server. There's no user by user validation so it's imperative that the site be locked down with an apache password at least. If you don't want the ease and associated danger of creating and deleting fossils from the website, you can use the `list.php` file and not copy in `index.php`. Alternatively, there are `$allow_create` and `$allow_delte` configuration variables in config. If you use `list.php` or turn off `allow` functions but leave the site open, the world could see all of the fossils and potentially clone them (although you can prevent that in the individual fossil permissions).
 
 
 ## Contact information

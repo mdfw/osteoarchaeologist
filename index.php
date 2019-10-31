@@ -34,7 +34,7 @@ chdir($repos_location);
 $new_fossil_output = '';
 $filename = '';
 $admin_user = '';
-if (isset($_POST['new-fossil']) && $_POST['new-fossil'] === 'yes') {
+if (isset($_POST['new-fossil']) && $_POST['new-fossil'] === 'yes' && $allow_create) {
 	$new_fossil_input_valid = true;
 	if (!isset($_POST['filename'])) {
 		$new_fossil_input_valid = false;
@@ -95,7 +95,7 @@ if (isset($_POST['new-fossil']) && $_POST['new-fossil'] === 'yes') {
 $delete_fossil_output = '';
 $deletefilename = '';
 $deletecommand = '';
-if (isset($_POST['delete-fossil']) && $_POST['delete-fossil'] === 'yes') {
+if (isset($_POST['delete-fossil']) && $_POST['delete-fossil'] === 'yes' && $allow_delete) {
 	$delete_fossil_filename = '';
 	$delete_fossil_input_valid = false;
 	if (!isset($_POST['deletecommand'])) {
@@ -123,7 +123,7 @@ if (isset($_POST['delete-fossil']) && $_POST['delete-fossil'] === 'yes') {
 		exec('rm '.$repos_location.$deletefilename, $retArr, $retVal);
 		if ($retVal == 0) {
 			$delete_fossil_output .= "<div class='delete-fossil-success'>".PHP_EOL;
-			$delete_fossil_output .= "🗑 Deleted {$deletefilename}:<br />".PHP_EOL;
+			$delete_fossil_output .= "🗑 Deleted {$deletefilename}.<br />".PHP_EOL;
 			$delete_fossil_output .= "<ul>";
 			foreach ($retArr as $return_line) {
 				$delete_fossil_output .= "<li>$return_line</li>".PHP_EOL;
@@ -163,7 +163,8 @@ if (empty($admin_user)) {
 	$admin_user = $fossil_admin_name_default;
 }
 
-// Show the add fossil form with any new fossil output from above.
+// Show the add fossil form with any new fossil output from above if we have it turned on.
+if ($allow_create) {
 ?>
 <h2>New fossil repository</h2>
 <?php echo $new_fossil_output; ?>
@@ -175,7 +176,9 @@ Admin user: <input type="text" name="admin_user" value="<?php echo $admin_user ?
 </form>
 
 <?php 
+}
 // Show the delete fossil form with any new fossil output from above.
+if ($allow_delete) {
 ?>
 <h2>Delete fossil repository</h2>
 <?php echo $delete_fossil_output; ?>
@@ -185,5 +188,8 @@ To delete a fossil, type 'DELETE filename' (don't include <?php echo $fossil_fil
 <input type="submit" value='Delete'>
 </form>
 
+<?php 
+}
+?>
 </body>
 </html>

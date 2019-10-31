@@ -29,6 +29,9 @@ $fossil_file_extension = ".fossil";
 //   See: https://fossil-scm.org/forum/forumpost/3982a59b8c
 //   Default: leave it and see if something breaks.
 $fossil_nocgi = "-nocgi";
-
+// Allow the create function.
+$allow_create = TRUE;
+// Allow the delete function.
+$allow_delete = TRUE;
 
 ?>
