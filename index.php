@@ -8,27 +8,7 @@
 
 /* Variables */
 
-// The name of the site
-$site_name = "The Fossils";
-// The website url - could be supplied by php, but there are security implications with that.
-$site_url = "MYCOOLFOSSILS.com";
-// Location of the repositories (should be outside of web doc scope)
-$repos_location = "/home/YOURUSER/repositories/"; 
-// Location of the FOSSIL_HOME environment variable. Probably user home. Use full paths.
-$fossil_home_location = "/home/YOURUSER/";
-// Location of the fossil binary
-$fossil_bin_location = "/home/YOURUSER/bin/fossil";
-// The name of the repo.cgi that gets called for individual fossils (cloning/etc).
-$repo_cgi_name = "repo.cgi";
-// The default name for the 'admin' user when creating new fossils (the -A argument)
-$fossil_admin_name_default = "admin";
-// The file extension to use for files
-$fossil_file_extension = ".fossil";
-// Called as part of the 'fossil init' function. However, may cause problems if your
-//   environment does not set up the right CGI variables. 
-//   See: https://fossil-scm.org/forum/forumpost/3982a59b8c
-//   Default: leave it and see if something breaks.
-$fossil_nocgi = "-nocgi";
+require_once('o_config.php');
 
 ?>
 <html>
@@ -90,7 +70,7 @@ if (isset($_POST['new-fossil']) && $_POST['new-fossil'] === 'yes') {
 		exec('FOSSIL_HOME='.$fossil_home_location.' '.$fossil_bin_location.' '.$fossil_nocgi.' init -A '.escapeshellarg($admin_user).' '.escapeshellarg($filename).$fossil_file_extension, $retArr, $retVal);
 		if ($retVal == 0) {
 			$new_fossil_output .= "<div class='new-fossil-created'>".PHP_EOL;
-			$new_fossil_output .= "✅ Repo named <a href='{$repo_cgi_name}/$filename'>'{$filename}{$fossil_file_extension}'</a> created:<br />".PHP_EOL;
+			$new_fossil_output .= "✅ Repo named <a href='repo.cgi/$filename'>'{$filename}{$fossil_file_extension}'</a> created:<br />".PHP_EOL;
 			$new_fossil_output .= "<ul>".PHP_EOL;
 			foreach ($retArr as $return_line) {
 				$new_fossil_output .= "<li>$return_line</li>".PHP_EOL;
@@ -174,8 +154,8 @@ echo "<form>".PHP_EOL;
 echo "<table class='repo-table'>".PHP_EOL;
 foreach ($docs as $path => $timestamp) {
 	$without_extension = pathinfo($path, PATHINFO_FILENAME);
-    echo "<tr class='repo-row'><td class='repo-cell repo-name'><a href='{$repo_cgi_name}/$without_extension'>$without_extension</a> </td><td class='repo-cell repo-filesize'>" . human_filesize($path, 0) . " - </td><td class='repo-cell repo-date'>". date ("F d Y H:i:s", filemtime($path)) . "</td></tr>".PHP_EOL;
-    echo "<tr class='repo-clone-row'><td class='repo-cell repo-clone' colspan=3 style='padding-left: 5%'><input style='width: 100%' type='text' name='clone' value='fossil clone https://YOURUSER@{$site_url}/{$repo_cgi_name}/{$without_extension} {$without_extension}'></td></tr>".PHP_EOL;
+    echo "<tr class='repo-row'><td class='repo-cell repo-name'><a href='repo.cgi/$without_extension'>$without_extension</a> </td><td class='repo-cell repo-filesize'>" . human_filesize($path, 0) . " - </td><td class='repo-cell repo-date'>". date ("F d Y H:i:s", filemtime($path)) . "</td></tr>".PHP_EOL;
+    echo "<tr class='repo-clone-row'><td class='repo-cell repo-clone' colspan=3 style='padding-left: 5%'><input style='width: 100%' type='text' name='clone' value='fossil clone https://YOURUSER@{$site_url}/repo.cgi/{$without_extension} {$without_extension}'></td></tr>".PHP_EOL;
 }
 echo "</table>".PHP_EOL;
 echo "</form>".PHP_EOL;

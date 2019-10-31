@@ -4,6 +4,4 @@ AuthType Basic
 AuthUserFile /home/YOURUSER/httpdpasswords/.htpasswd
 Require valid-user
 
-DirectoryIndex list.cgi
-
-SetEnv FOSSIL_HOME "/home/YOURUSER"
+DirectoryIndex index.php
